@@ -32,15 +32,41 @@ public class Fachada {
 	
 	public static ArrayList<Pedido>	listarPedidos(String telefone, int tipo) {
 		// retorna os pedidos pagos (tipo=1) ou pedidos n�o pagos (tipo=2) ou pedidos pagos e n�o pagos (tipo=3) de um cliente
-		return new ArrayList<Pedido>();
+		Cliente cliente = repositorio.localizarCliente(telefone);
+		System.out.println(cliente.getNome() + " - " + telefone);
+		ArrayList<Pedido> pedidoCliente = cliente.getPedidos();
+		ArrayList<Pedido> pedidoTipo = new ArrayList<Pedido>();
+		if(tipo==1) {	
+			for(Pedido p : pedidoCliente) {
+				if(p.getPago()==true) {
+					pedidoTipo.add(p);
+					}
+			}
+			return pedidoTipo;
+		}
+		else if(tipo==2){
+			for(Pedido p : pedidoCliente) {
+				if(p.getPago()==false) {
+					pedidoTipo.add(p);
+				}
+			}
+			return pedidoTipo;
+		}
+		else {
+			return pedidoTipo;	
+		}
 	}
 	
 	
-	public static Produto cadastrarProduto(String nome, double preco) {
+	public static Produto cadastrarProduto(String nome, double preco) throws Exception {
 		//cria e retorna um novo produto
 		Produto novoProduto = new Produto(nome, preco);
-		repositorio.adicionar(novoProduto);
-		return novoProduto;
+		if(repositorio.localizarProduto(nome) != null) {
+			throw new Exception("Produto já cadastrado.");
+		}else {
+			repositorio.adicionar(novoProduto);
+			return novoProduto;
+		}
 	}
 	
 	public static Cliente cadastrarCliente(String telefone, String nome, String endereco) {
@@ -94,28 +120,73 @@ public class Fachada {
 		pedido.getProdutos().add(produto);
 	}
 	
-	public static void 	removerProdutoPedido(int idpedido, int idproduto) {
+	public static void 	removerProdutoPedido(int idpedido, int idproduto) throws Exception {
 		// remove uma ocorr�ncia do produto no pedido
+		Pedido pedido = repositorio.localizarPedido(idpedido);
+		Produto produto = repositorio.localizarProduto(idproduto);
+		if(pedido==null)
+			throw new Exception("Pedido de id "+idpedido+" não encontrado!");
+		if(produto==null)
+			throw new Exception("Produto de id "+idproduto+" não encontrado!");
+		pedido.setValorTotal(pedido.getValorTotal()-produto.getPreco());
+		pedido.getProdutos().remove(produto);
 	}
 	
-	public static Pedido consultarPedido(int idpedido) {
+	public static Pedido consultarPedido(int idpedido) throws Exception {
 		//retorna o pedido
-		return null;
+		Pedido pedido = repositorio.localizarPedido(idpedido);
+		if(pedido == null) {
+			throw new Exception("Pedido inexistente");
+		}
+		return pedido;
+		
 	}
-	public static void 	pagarPedido(int idpedido, String nomeentregador) {
+	
+	public static void 	pagarPedido(int idpedido, String nomeentregador) throws Exception {
 		// atualiza dados de pagamento do pedido (entregador e pago) 
+		Pedido pedido = repositorio.localizarPedido(idpedido);
+		if(pedido.getPago())
+			throw new Exception("O pedido já foi pago.");
+		pedido.setEntregador(nomeentregador);
+		pedido.setPago(true);
 	}
-	public static void 	cancelarPedido(int idpedido) {
-		// apaga o pedido 
+	
+	public static void 	cancelarPedido(int idpedido) throws Exception {
+		// apaga o pedido
+		Pedido pedido = repositorio.localizarPedido(idpedido);
+		if(pedido.getPago() == false) {
+			repositorio.remover(pedido);
+		}
+		else {
+			throw new Exception("Pedidos pagos não podem ser cancelados.");
+		}
 	}
 	
 	public static double consultarArrecadacao(int dia) {
 		// retorna a soma do valortotal dos pedidos pagos do dia 
-		return 0;
+		ArrayList<Pedido> pedidos = repositorio.getPedidos();
+		double arrec = 0;
+		for(Pedido p : pedidos) 
+			if(p.getDataHora().getDayOfMonth() == dia)
+				arrec = arrec + p.getValorTotal();
+		
+		return arrec;
 	}
+	
 	public static ArrayList<Produto> consultarProdutoTop() {
 		// retorna os produtos que tiveram o maior quantidade de pedidos (n�o deve incluir os pedidos cancelados)
-		return new ArrayList<Produto>();
+		ArrayList<Produto> produtos = repositorio.getProdutos();
+		ArrayList<Produto> bigger = new ArrayList<>();
+		int counter = 0;
+		for(Produto p : produtos) {
+			if(p.getPedidos().size() > counter) 
+				counter = p.getPedidos().size();	
+		}
+		for(Produto p : produtos) {
+			if(p.getPedidos().size() == counter)
+				bigger.add(p);
+		}
+		return bigger;
 	}
 
 }

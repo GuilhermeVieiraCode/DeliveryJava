@@ -2,6 +2,7 @@ package aplicacao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.time.LocalDate;
 
 import fachada.Fachada;
 import modelo.Cliente;
@@ -22,14 +23,14 @@ public class AplicacaoConsole1 {
 			pedro = Fachada.cadastrarCliente("988883333", "pedro","Rua da Pesca, 3");			
 			ana = Fachada.cadastrarCliente("988884444", "ana","Rua do Silencio, 4");		
 			katia = Fachada.cadastrarCliente("988885555", "katia","Rua da Paz, 5");
-			listarClientes();
+			
 			
 			pizza = Fachada.cadastrarProduto("pizza", 30.0);
 			sushi = Fachada.cadastrarProduto("sushi", 40.0);
 			coca = Fachada.cadastrarProduto("coca-cola", 10.0);
 			guarana = Fachada.cadastrarProduto("guarana", 9.0);	
 			suco = Fachada.cadastrarProduto("suco", 4.0);
-			listarProdutos("");
+			
 
 			System.out.println("Criar pedidos");
 			pedido1 = Fachada.criarPedido("988881111");
@@ -37,7 +38,6 @@ public class AplicacaoConsole1 {
 			pedido3 = Fachada.criarPedido("988883333");
 			pedido4 = Fachada.criarPedido("988881111");
 			pedido5 = Fachada.criarPedidoExpress("988881111", 10.0);
-			listarPedidos();
 	
 			
 			System.out.println("Adicionar produtos");		
@@ -48,7 +48,7 @@ public class AplicacaoConsole1 {
 			Fachada.adicionarProdutoPedido(2, 2);	
 			Fachada.adicionarProdutoPedido(2, 2);
 			Fachada.adicionarProdutoPedido(2, 4);
-			/*
+			
 			Fachada.removerProdutoPedido(2, 2);	
 
 			Fachada.adicionarProdutoPedido(3, 1);	
@@ -56,6 +56,8 @@ public class AplicacaoConsole1 {
 			Fachada.adicionarProdutoPedido(3, 3);	
 			Fachada.adicionarProdutoPedido(3, 4);
 			Fachada.removerProdutoPedido(3, 4);	
+			
+			
 
 			//pedido 4 nao possui produtos
 
@@ -66,38 +68,45 @@ public class AplicacaoConsole1 {
 			Fachada.adicionarProdutoPedido(5, 5);
 
 			listarProdutos("");
+			
 			listarProdutos("i"); //contem a letra i  (contains)
+			
 			listarClientes();
 			listarPedidos();
+			
+			/*
 			listarPedidos("988881111",1);	//pagos
 			listarPedidos("988881111",2);	//nao pagos
 			listarPedidos("988881111",3);	//todos
-
+			*/
+			
+			
 			System.out.println("\nPagar pedidos");				
 			Fachada.pagarPedido(1, "joao");		//nome do entregador
 			Fachada.pagarPedido(2, "jose");
 			Fachada.pagarPedido(5, "jose");
 			System.out.println("Cancelar pedido:");
 			Fachada.cancelarPedido(3);
+			
 
 			System.out.println("\nconsultar pedido 1="+ Fachada.consultarPedido(1)); //idpedido
 			System.out.println("consultar pedido 2="+ Fachada.consultarPedido(2));
 			System.out.println("consultar pedido 5="+ Fachada.consultarPedido(5));
-
+			
 			int dia = LocalDate.now().getDayOfMonth();
 			double arrec = Fachada.consultarArrecadacao(dia);  //somente pedidos pagos
 			System.out.println("Arrecadacao do dia "+ dia);
 			System.out.println(arrec);
 
-//				double calculo = 	3*pizza.getPreco()+
-//									2*sushi.getPreco()+
-//									2*coca.getPreco()+
-//									2*guarana.getPreco()+
-//									1*suco.getPreco() + 10.0;
-//			
-//				if(arrec != calculo)
-//				System.out.println("arrecadacao diferente de "+calculo);
-
+				double calculo = 	3*pizza.getPreco()+
+									2*sushi.getPreco()+
+									2*coca.getPreco()+
+									2*guarana.getPreco()+
+									1*suco.getPreco() + 10.0;
+			
+				if(arrec != calculo)
+				System.out.println("arrecadacao diferente de "+calculo);
+			
 			System.out.println("Produtos TOP");
 			ArrayList<Produto> tops = Fachada.consultarProdutoTop();
 			for(Produto p : tops)
@@ -111,12 +120,12 @@ public class AplicacaoConsole1 {
 			listarPedidos("988881111",1);	//pagos
 			listarPedidos("988881111",2);	//nao pagos
 			listarPedidos("988881111",3);	//todos
-			*/
-			/*
+			
+			
 			//**************
 			testarExcecoes();
 			//**************
-		*/
+		
 		} catch (Exception e) {
 			System.out.println("--->"+e.getMessage());
 		}		
@@ -137,7 +146,7 @@ public class AplicacaoConsole1 {
 			System.out.println(p);
 		}else {
 			for(Produto p : produtos)
-				if(p.getNome().equals(texto)) {
+				if(p.getNome().contains(texto)) {
 					System.out.println(p);
 				}
 		}
@@ -156,14 +165,15 @@ public class AplicacaoConsole1 {
 		for(Pedido p : pedidos)
 			System.out.println(p);
 	}
-	/*
+	
 	public static void testarExcecoes() {
 		System.out.println("\n-------EXCE��ES LAN�ADAS--------");
+		
 		try {
 			Fachada.cadastrarProduto("pizza", 30.0);
 			System.out.println("*************1Nao lan�ou exce��o para: cadastro de produto existente "); 
 		}catch (Exception e) {System.out.println("1ok--->"+e.getMessage());}
-
+		
 		try {
 			Fachada.adicionarProdutoPedido(99, 1);	//pedido 99
 			System.out.println("*************2Nao lan�ou exce��o para: pedido inexistente"); 
@@ -180,7 +190,7 @@ public class AplicacaoConsole1 {
 		}catch (Exception e) {System.out.println("4ok--->"+e.getMessage());}
 	}
 	
-	*/
+	
 
 	
 

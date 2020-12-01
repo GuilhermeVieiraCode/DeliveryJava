@@ -34,6 +34,26 @@ public class Pedido {
 		this.valorTotal = valorTotal;
 	}
 	
+	public String getEntregador() {
+		return entregador;
+	}
+	
+	public void setEntregador(String novoEntregador) {
+		entregador = novoEntregador;
+	}
+	
+	public boolean getPago() {
+		return pago;
+	}
+	
+	public void setPago(boolean estado) {
+		pago = estado;
+	}
+	
+	public LocalDateTime getDataHora() {
+		return dataHora;
+	} 
+	
 	public ArrayList<Produto> getProdutos(){
 		return produtos;
 	}

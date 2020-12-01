@@ -26,10 +26,20 @@ public class Repositorio {
 	}
 	public Produto localizarProduto(int id){
 		//associar id com a posi��o do objeto
-		if(id>=1 && id <= produtos.size())
-			return produtos.get(id-1); // posicao � id-1
-		else
-			return null;
+		for(Produto p : produtos){
+			if(p.getId()==id)
+				return p;
+		}
+		return null;
+	}
+	
+	public Produto localizarProduto(String nome) {
+		for(Produto p : produtos) {
+			if(p.getNome()==(nome)){
+				return p;
+			}
+		}
+		return null;
 	}
 	
 	public void adicionar(Pedido p){

@@ -26,6 +26,10 @@ public class Cliente {
 		return this.endereco;
 	}
 	
+	public ArrayList<Pedido> getPedidos(){
+		return pedidos;
+	}
+	
 	@Override
 	public String toString() {
 		String texto = " telefone: " + telefone + ", nome:" + nome + ", endereco: " + endereco;
