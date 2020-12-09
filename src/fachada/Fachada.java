@@ -45,10 +45,10 @@ public class Fachada {
 		return repositorio.getPedidos();
 	}
 	
-	public static ArrayList<Pedido>	listarPedidos(String telefone, int tipo) {
+	public static ArrayList<Pedido> listarPedidos(String telefone, int tipo) {
 		// retorna os pedidos pagos (tipo=1) ou pedidos n�o pagos (tipo=2) ou pedidos pagos e n�o pagos (tipo=3) de um cliente
 		Cliente cliente = repositorio.localizarCliente(telefone);
-		System.out.println(cliente.getNome() + " - " + telefone);
+		//System.out.println(cliente.getNome() + " - " + telefone);
 		ArrayList<Pedido> pedidoCliente = cliente.getPedidos();
 		ArrayList<Pedido> pedidoTipo = new ArrayList<Pedido>();
 		if(tipo==1) {	
@@ -68,7 +68,7 @@ public class Fachada {
 			return pedidoTipo;
 		}
 		else {
-			return pedidoTipo;	
+			return pedidoCliente;	
 		}
 	}
 	
@@ -86,7 +86,8 @@ public class Fachada {
 	
 	public static Cliente cadastrarCliente(String telefone, String nome, String endereco) {
 		// cria e retorna um novo cliente
-		Cliente novoCliente = new Cliente(telefone, nome, endereco);
+		ArrayList<Pedido> pedidos = new ArrayList<>();
+		Cliente novoCliente = new Cliente(telefone, nome, endereco, pedidos);
 		repositorio.adicionar(novoCliente);
 		return novoCliente;
 	}
@@ -103,6 +104,7 @@ public class Fachada {
 			throw new Exception("Telefone de cliente não encontrado.");
 		double valorTotal = 0;
 		Pedido novoPedido = new Pedido(idpedido, data, valorTotal, entregador, pago, produtos, cliente);
+		cliente.getPedidos().add(novoPedido);
 		repositorio.adicionar(novoPedido);
 		return novoPedido;
 	}
@@ -119,6 +121,7 @@ public class Fachada {
 			throw new Exception("Telefone de cliente não encontrado.");
 		double valorTotal = 0;
 		PedidoExpress novoPedido = new PedidoExpress(idpedido, data, valorTotal, entregador, pago, produtos, cliente, taxa);
+		cliente.getPedidos().add(novoPedido);
 		repositorio.adicionar(novoPedido);
 		return novoPedido;
 	}
@@ -131,8 +134,9 @@ public class Fachada {
 			throw new Exception("Pedido de id "+idpedido+" não encontrado!");
 		if(produto==null)
 			throw new Exception("Produto de id "+idproduto+" não encontrado!");
-		pedido.setValorTotal(produto.getPreco()+pedido.getValorTotal());
+		produto.getPedidos().add(pedido);
 		pedido.getProdutos().add(produto);
+		pedido.setValorTotal(produto.getPreco()+pedido.getValorTotal());
 	}
 	
 	public static void 	removerProdutoPedido(int idpedido, int idproduto) throws Exception {
@@ -144,6 +148,7 @@ public class Fachada {
 		if(produto==null)
 			throw new Exception("Produto de id "+idproduto+" não encontrado!");
 		pedido.setValorTotal(pedido.getValorTotal()-produto.getPreco());
+		produto.getPedidos().remove(pedido);
 		pedido.getProdutos().remove(produto);
 	}
 	

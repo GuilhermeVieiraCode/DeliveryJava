@@ -70,7 +70,7 @@ public class AplicacaoConsole1 {
 			Fachada.adicionarProdutoPedido(5, 3);	
 			Fachada.adicionarProdutoPedido(5, 4);
 			Fachada.adicionarProdutoPedido(5, 5);
-
+			/*
 			listarProdutos("");
 			
 			listarProdutos("i"); //contem a letra i  (contains)
@@ -78,7 +78,7 @@ public class AplicacaoConsole1 {
 			listarClientes();
 			listarPedidos();
 			
-			/*
+			
 			listarPedidos("988881111",1);	//pagos
 			listarPedidos("988881111",2);	//nao pagos
 			listarPedidos("988881111",3);	//todos

@@ -62,8 +62,14 @@ public class Repositorio {
 	public void remover(Cliente c){
 		clientes.remove(c.getTelefone());  //chave � o telefone
 	}
+	
 	public Cliente localizarCliente(String telefone){
-		return clientes.get(telefone);
+		for(Cliente cli : clientes.values()) {
+			if(cli.getTelefone().contentEquals(telefone)) 
+				return cli;
+			
+		}
+		return null;
 	}
 
 	public ArrayList<Produto> getProdutos() {

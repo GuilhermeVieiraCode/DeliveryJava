@@ -9,7 +9,7 @@ public class Pedido {
 	private double valorTotal;
 	private String entregador;
 	private boolean pago;
-	private ArrayList<Produto> produtos = new ArrayList<Produto>();
+	private ArrayList<Produto> produtos;
 	private Cliente cliente;
 	
 	public Pedido(int id, LocalDateTime datahora, double valorTotal, String entregador, boolean pago, ArrayList<Produto> produtos, Cliente cliente) {

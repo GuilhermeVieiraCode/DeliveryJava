@@ -6,12 +6,13 @@ public class Cliente {
 	private String telefone;
 	private String nome;
 	private String endereco;
-	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+	private ArrayList<Pedido> pedidos;
 	
-	public Cliente(String telefone, String nome, String endereco) {
+	public Cliente(String telefone, String nome, String endereco, ArrayList<Pedido> pedidos) {
 		this.telefone = telefone;
 		this.nome = nome;
 		this.endereco = endereco;
+		this.pedidos = pedidos;
 	}
 	
 	public String getTelefone() {
@@ -27,7 +28,7 @@ public class Cliente {
 	}
 	
 	public ArrayList<Pedido> getPedidos(){
-		return pedidos;
+		return this.pedidos;
 	}
 	
 	@Override
