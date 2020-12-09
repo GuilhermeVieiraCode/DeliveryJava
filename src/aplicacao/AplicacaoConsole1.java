@@ -11,12 +11,16 @@ import modelo.Produto;
 
 
 public class AplicacaoConsole1 {
-	private Produto pizza,sushi,coca, guarana, suco ;
-	private Cliente paulo,maria,pedro,ana, katia ;	
-	private Pedido pedido1,pedido2,pedido3,pedido4, pedido5;
+	//private Produto pizza,sushi,coca, guarana, suco ;
+	//private Cliente paulo,maria,pedro,ana, katia ;	
+	//private Pedido pedido1,pedido2,pedido3,pedido4, pedido5;
 
 	public AplicacaoConsole1() {
 		try {
+			Produto pizza,sushi,coca, guarana, suco ;
+			Cliente paulo,maria,pedro,ana, katia ;	
+			Pedido pedido1,pedido2,pedido3,pedido4, pedido5;
+			
 			System.out.println("Cadastrar clientes e produtos");
 			paulo = Fachada.cadastrarCliente("988881111", "paulo", "Rua dos Tronos, 1");
 			maria = Fachada.cadastrarCliente("988882222", "maria","Rua da Justiça, 2");			
@@ -141,15 +145,8 @@ public class AplicacaoConsole1 {
 	public void listarProdutos(String texto) {
 		System.out.println("\nListagem de produtos:"+texto);
 		ArrayList<Produto> produtos = Fachada.listarProdutos(texto);
-		if(texto == "") {
 		for(Produto p : produtos)
 			System.out.println(p);
-		}else {
-			for(Produto p : produtos)
-				if(p.getNome().contains(texto)) {
-					System.out.println(p);
-				}
-		}
 	}
 
 	public  void listarPedidos() {
@@ -196,5 +193,10 @@ public class AplicacaoConsole1 {
 
 	public static void main (String[] args) {
 		AplicacaoConsole1 aplicacaoConsole1 = new AplicacaoConsole1();
+	}
+	
+	public void AplicacaoConsole1() {
+		// TODO Auto-generated method stub
+		
 	}
 }

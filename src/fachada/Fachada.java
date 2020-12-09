@@ -14,9 +14,24 @@ public class Fachada {
 	private static int idpedido=0;
 	//...
 
-	public static ArrayList<Produto> listarProdutos(String texto) {
+	public static ArrayList<Produto> listarProdutos() {
 		// retorna todos os produtos do repositorio cujo nome cont�m o texto fornecido (ou retorna todos os produtos caso o texto esteja vazio)
 		return repositorio.getProdutos();
+	}
+	
+	public static ArrayList<Produto> listarProdutos(String texto) {
+		// retorna todos os produtos do repositorio cujo nome cont�m o texto fornecido (ou retorna todos os produtos caso o texto esteja vazio)
+		ArrayList<Produto> produtos = new ArrayList<>(); 
+		ArrayList<Produto> listaProdutos = repositorio.getProdutos();
+		if(texto == "") {
+			return listaProdutos;
+		}
+		for(Produto p : listaProdutos) {
+			if(p.getNome().contains(texto)) {
+				produtos.add(p);
+			}
+		}
+		return produtos;
 	}
 	
 	public static HashMap<String,Cliente> listarClientes() {
