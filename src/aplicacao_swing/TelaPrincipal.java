@@ -189,6 +189,34 @@ public class TelaPrincipal {
 					}
 				});
 				mnListar.add(Pedidos);
+				
+				PedidosDoCliente = new JMenuItem("Pedidos do cliente");
+				PedidosDoCliente.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						TelaPedidosCliente j = new TelaPedidosCliente();
+						j.setVisible(true);
+					}
+				});
+				mnListar.add(PedidosDoCliente);
+				
+				PedidosPagosClientes = new JMenuItem("Pedidos pagos do cliente");
+				PedidosPagosClientes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						TelaPedidosPagos j = new TelaPedidosPagos();
+						j.setVisible(true);
+					}
+				});
+				mnListar.add(PedidosPagosClientes);
+				
+				PedidosNaoPagos = new JMenuItem("Pedidos não pagos");
+				PedidosNaoPagos.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						TelaPedidosNaoPagos j = new TelaPedidosNaoPagos();
+						j.setVisible(true);
+					}
+				});
+				mnListar.add(PedidosNaoPagos);
+
 								
 				ProdutosTops = new JMenuItem("Produtos Top");
 				ProdutosTops.addActionListener(new ActionListener() {
@@ -215,70 +243,6 @@ public class TelaPrincipal {
 					}
 				});
 				mnListar.add(Arrecadacao);
-				
-
-
-
-				//-------------MENU-----------------------------------
-		/*		mnPrateleira = new JMenu("Prateleira");
-				menuBar.add(mnPrateleira);
-
-				mntmCriar = new JMenuItem("Criar");
-				mntmCriar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						TelaCadastroPrateleira j = new TelaCadastroPrateleira();
-						j.setVisible(true);
-					}
-				});
-				mnPrateleira.add(mntmCriar);
-
-				mntmListar_1 = new JMenuItem("Listar");
-				mntmListar_1.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						ArrayList<Prateleira> lista = Fachada.listarPrateleiras();
-						String texto = "Listagem de prateleiras: \n";
-						if (lista.isEmpty())
-							texto += "n�o tem prateleira cadastrada\n";
-						else 
-							for(Prateleira p: lista) 
-								texto +=  p + "\n"; 
-						
-						TelaListagem j = new TelaListagem(texto);
-						j.setVisible(true);
-					}
-				});
-				mnPrateleira.add(mntmListar_1);
-
-				mntmInserirProduto = new JMenuItem("Inserir produto");
-				mntmInserirProduto.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						TelaProdutoPrateleira j = new TelaProdutoPrateleira();
-						j.setVisible(true);
-					}
-				});
-				mnPrateleira.add(mntmInserirProduto);
-
-				mntmRemoverProduto = new JMenuItem("Remover produto");
-				mntmRemoverProduto.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						TelaProdutoPrateleira j = new TelaProdutoPrateleira();
-						j.setVisible(true);
-					}
-				});
-				mnPrateleira.add(mntmRemoverProduto);
-
-				//-------------MENU-----------------------------------
-				JMenu mnConsulta = new JMenu("Consulta");
-				menuBar.add(mnConsulta);
-				mnConsulta.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						TelaConsulta j = new TelaConsulta();
-						j.setVisible(true);
-					}
-				});*/
-
-
 			}
 		}
 
